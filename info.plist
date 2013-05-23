@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>connections</key>
+	<dict>
+		<key>5CB71329-182F-4D0F-91FC-B26ADDCE53A0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F8634F76-6F15-493C-9155-01831D3025F1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>63F60794-BB56-4415-9372-BAF974C3A7E1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F8634F76-6F15-493C-9155-01831D3025F1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Roman Komarov</string>
+	<key>description</key>
+	<string>Get Yandex Search Suggestions</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Yandex Suggest</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>я</string>
+				<key>runningsubtext</key>
+				<string>Получаем список подсказок…</string>
+				<key>script</key>
+				<string>require_once('workflows.php');
+$wf = new Workflows();
+
+$orig = "{query}";
+$json = $wf-&gt;request( "http://suggest.yandex.ru/suggest-ya.cgi?v=4&amp;fact=1&amp;callback=&amp;part=".urlencode( $orig ) );
+$json = json_decode( $json );
+$int = 1;
+
+foreach( $json[1] as $sugg ):
+    $extra = '';
+    $site = '';
+	if (is_array($sugg)) {
+		$data = $sugg[1];
+		$extra = $sugg[2];
+         if ($sugg[0] == 'nav') {
+             $data = '//'.$sugg[3];
+             $site = 'Перейти к http:';
+         }
+	} else {
+		$data = $sugg;
+	}
+	$wf-&gt;result( $int.'.'.time(), "$data", "$site$data", "$extra", 'icon.png'  );
+
+	$int++;
+endforeach;
+
+		$wf-&gt;result( $int.'.'.time(), "$orig", "$orig", "", 'icon.png'  );
+		$int++;
+
+
+$results = $wf-&gt;results();
+if ( count( $results ) == 0 ):
+	$wf-&gt;result( 'yandexsuggest', $orig, 'No Suggestions', 'No search suggestions found. Search Yandex for '.$orig, 'icon.png' );
+endif;
+
+echo $wf-&gt;toxml();</string>
+				<key>subtext</key>
+				<string>Искать в Яндексе с подсказками</string>
+				<key>title</key>
+				<string>Найти в Яндексе</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>5CB71329-182F-4D0F-91FC-B26ADDCE53A0</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>userinput="{query}"
+
+if [[ $userinput == //* ]]; then
+  open http:{query}
+else
+  open http://yandex.ru/yandsearch?text={query}
+fi</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>F8634F76-6F15-493C-9155-01831D3025F1</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>y</string>
+				<key>runningsubtext</key>
+				<string>Получаем список подсказок…</string>
+				<key>script</key>
+				<string>require_once('workflows.php');
+$wf = new Workflows();
+
+$orig = "{query}";
+$json = $wf-&gt;request( "http://suggest.yandex.ru/suggest-ya.cgi?v=4&amp;fact=1&amp;callback=&amp;part=".urlencode( $orig ) );
+$json = json_decode( $json );
+$int = 1;
+
+foreach( $json[1] as $sugg ):
+    $extra = '';
+    $site = '';
+	if (is_array($sugg)) {
+		$data = $sugg[1];
+		$extra = $sugg[2];
+         if ($sugg[0] == 'nav') {
+             $data = '//'.$sugg[3];
+             $site = 'Перейти к http:';
+         }
+	} else {
+		$data = $sugg;
+	}
+	$wf-&gt;result( $int.'.'.time(), "$data", "$site$data", "$extra", 'icon.png'  );
+
+	$int++;
+endforeach;
+
+		$wf-&gt;result( $int.'.'.time(), "$orig", "$orig", "", 'icon.png'  );
+		$int++;
+
+
+$results = $wf-&gt;results();
+if ( count( $results ) == 0 ):
+	$wf-&gt;result( 'yandexsuggest', $orig, 'No Suggestions', 'No search suggestions found. Search Yandex for '.$orig, 'icon.png' );
+endif;
+
+echo $wf-&gt;toxml();</string>
+				<key>subtext</key>
+				<string>Искать в Яндексе с подсказками</string>
+				<key>title</key>
+				<string>Найти в Яндексе</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>63F60794-BB56-4415-9372-BAF974C3A7E1</string>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>5CB71329-182F-4D0F-91FC-B26ADDCE53A0</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>63F60794-BB56-4415-9372-BAF974C3A7E1</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>F8634F76-6F15-493C-9155-01831D3025F1</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://yandex.ru/</string>
+</dict>
+</plist>
