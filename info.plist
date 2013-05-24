@@ -55,42 +55,9 @@
 $wf = new Workflows();
 
 $orig = "{query}";
-$json = $wf-&gt;request( "http://suggest.yandex.ru/suggest-ya.cgi?v=4&amp;fact=1&amp;callback=&amp;part=".urlencode( $orig ) );
-$json = json_decode( $json );
-$int = 1;
 
-foreach( $json[1] as $sugg ):
-    $extra = '';
-    $site = '';
-	if (is_array($sugg)) {
-		if ($sugg[0] != "") {
-			$data = $sugg[1];
-			$extra = $sugg[2];
-			if ($sugg[0] == 'nav') {
-				$data = '//'.$sugg[3];
-				$site = 'Перейти к http:';
-			}
-		} else {
-			$data = $sugg[1];
-		}
-	} else {
-		$data = $sugg;
-	}
-	$wf-&gt;result( $int.'.'.time(), "$data", "$site$data", "$extra", 'icon.png'  );
-
-	$int++;
-endforeach;
-
-		$wf-&gt;result( $int.'.'.time(), "$orig", "$orig", "", 'icon.png'  );
-		$int++;
-
-
-$results = $wf-&gt;results();
-if ( count( $results ) == 0 ):
-	$wf-&gt;result( 'yandexsuggest', $orig, 'No Suggestions', 'No search suggestions found. Search Yandex for '.$orig, 'icon.png' );
-endif;
-
-echo $wf-&gt;toxml();</string>
+include('suggest.php');
+</string>
 				<key>subtext</key>
 				<string>Искать в Яндексе с подсказками</string>
 				<key>title</key>
@@ -121,42 +88,9 @@ echo $wf-&gt;toxml();</string>
 $wf = new Workflows();
 
 $orig = "{query}";
-$json = $wf-&gt;request( "http://suggest.yandex.ru/suggest-ya.cgi?v=4&amp;fact=1&amp;callback=&amp;part=".urlencode( $orig ) );
-$json = json_decode( $json );
-$int = 1;
 
-foreach( $json[1] as $sugg ):
-    $extra = '';
-    $site = '';
-	if (is_array($sugg)) {
-		if ($sugg[0] != "") {
-			$data = $sugg[1];
-			$extra = $sugg[2];
-			if ($sugg[0] == 'nav') {
-				$data = '//'.$sugg[3];
-				$site = 'Перейти к http:';
-			}
-		} else {
-			$data = $sugg[1];
-		}
-	} else {
-		$data = $sugg;
-	}
-	$wf-&gt;result( $int.'.'.time(), "$data", "$site$data", "$extra", 'icon.png'  );
-
-	$int++;
-endforeach;
-
-		$wf-&gt;result( $int.'.'.time(), "$orig", "$orig", "", 'icon.png'  );
-		$int++;
-
-
-$results = $wf-&gt;results();
-if ( count( $results ) == 0 ):
-	$wf-&gt;result( 'yandexsuggest', $orig, 'No Suggestions', 'No search suggestions found. Search Yandex for '.$orig, 'icon.png' );
-endif;
-
-echo $wf-&gt;toxml();</string>
+include('suggest.php');
+</string>
 				<key>subtext</key>
 				<string>Искать в Яндексе с подсказками</string>
 				<key>title</key>
