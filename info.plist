@@ -63,12 +63,16 @@ foreach( $json[1] as $sugg ):
     $extra = '';
     $site = '';
 	if (is_array($sugg)) {
-		$data = $sugg[1];
-		$extra = $sugg[2];
-         if ($sugg[0] == 'nav') {
-             $data = '//'.$sugg[3];
-             $site = 'Перейти к http:';
-         }
+		if ($sugg[0] != "") {
+			$data = $sugg[1];
+			$extra = $sugg[2];
+			if ($sugg[0] == 'nav') {
+				$data = '//'.$sugg[3];
+				$site = 'Перейти к http:';
+			}
+		} else {
+			$data = $sugg[1];
+		}
 	} else {
 		$data = $sugg;
 	}
@@ -104,27 +108,6 @@ echo $wf-&gt;toxml();</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>script</key>
-				<string>userinput="{query}"
-
-if [[ $userinput == //* ]]; then
-  open http:{query}
-else
-  open http://yandex.ru/yandsearch?text={query}
-fi</string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>F8634F76-6F15-493C-9155-01831D3025F1</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
@@ -146,12 +129,16 @@ foreach( $json[1] as $sugg ):
     $extra = '';
     $site = '';
 	if (is_array($sugg)) {
-		$data = $sugg[1];
-		$extra = $sugg[2];
-         if ($sugg[0] == 'nav') {
-             $data = '//'.$sugg[3];
-             $site = 'Перейти к http:';
-         }
+		if ($sugg[0] != "") {
+			$data = $sugg[1];
+			$extra = $sugg[2];
+			if ($sugg[0] == 'nav') {
+				$data = '//'.$sugg[3];
+				$site = 'Перейти к http:';
+			}
+		} else {
+			$data = $sugg[1];
+		}
 	} else {
 		$data = $sugg;
 	}
@@ -183,6 +170,27 @@ echo $wf-&gt;toxml();</string>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>63F60794-BB56-4415-9372-BAF974C3A7E1</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>userinput="{query}"
+
+if [[ $userinput == //* ]]; then
+  open http:{query}
+else
+  open http://yandex.ru/yandsearch?text={query}
+fi</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>F8634F76-6F15-493C-9155-01831D3025F1</string>
 		</dict>
 	</array>
 	<key>readme</key>
