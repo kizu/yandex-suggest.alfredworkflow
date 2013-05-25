@@ -26,8 +26,8 @@ foreach( $json[1] as $sugg ):
 	$int++;
 endforeach;
 
-		$wf->result( $int.'.'.time(), "$orig", "$orig", "", 'icon.png'  );
-		$int++;
+$wf->result( $int.'.'.time(), "$orig", "$orig", "Исходный запрос без подсказок", 'icon.png'  );
+$int++;
 
 
 $results = $wf->results();
