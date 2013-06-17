@@ -9,7 +9,12 @@
 Самый простой способ установить Саджесты Яндекса для Альфреда — выполнить вот эту команду:
 
 ``` sh
-curl -O https://codeload.github.com/kizu/yandex-suggest.alfredworkflow/zip/master && unzip master && rm master && zip -r -j yandex-suggest.alfredworkflow yandex-suggest.alfredworkflow-master && rm -rf yandex-suggest.alfredworkflow-master && open yandex-suggest.alfredworkflow
+curl -O https://codeload.github.com/kizu/yandex-suggest.alfredworkflow/zip/master \
+&& unzip master \
+&& rm master \
+&& zip -r -j yandex-suggest.alfredworkflow yandex-suggest.alfredworkflow-master \
+&& rm -rf yandex-suggest.alfredworkflow-master \
+&& open yandex-suggest.alfredworkflow
 ```
 
 Если же вы желаете сделать всё вручную, ну, сделайте всё вручную:
